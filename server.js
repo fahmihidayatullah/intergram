@@ -7,11 +7,11 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-//app.use(express.static('dist', {index: 'demo.html', maxage: '4h'}));
-app.get('/', cors(), function(req, res) {
-    res.redirect('https://fahmihidayatullah.id');
-    res.end();
-});
+app.use(express.static('dist', {index: 'demo.html', maxage: '4h'}));
+// app.get('/', cors(), function(req, res) {
+//     res.redirect('https://fahmihidayatullah.id');
+//     res.end();
+// });
 app.use(bodyParser.json());
 
 // handle admin Telegram messages
