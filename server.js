@@ -7,7 +7,11 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-app.use(express.static('dist', {index: 'demo.html', maxage: '4h'}));
+//app.use(express.static('dist', {index: 'demo.html', maxage: '4h'}));
+app.get('/', cors(), function(req, res) {
+    res.redirect('https://fahmihidayatullah.id');
+    res.end();
+});
 app.use(bodyParser.json());
 
 // handle admin Telegram messages
@@ -22,15 +26,17 @@ app.post('/hook', function(req, res){
         if (text.startsWith("/start")) {
             console.log("/start chatId " + chatId);
             sendTelegramMessage(chatId,
-                "*Welcome to Intergram* \n" +
-                "Your unique chat id is `" + chatId + "`\n" +
-                "Use it to link between the embedded chat and this telegram chat",
+                "*Selamat datang di https://fahmihidayatullah.id* \n" +
+                // "Your unique chat id is `" + chatId + "`\n" +
+                // "Use it to link between the embedded chat and this telegram chat",
+                "Thank you",
                 "Markdown");
         } else if (reply) {
             let replyText = reply.text || "";
             let userId = replyText.split(':')[0];
             io.to(userId).emit(chatId + "-" + userId, {name, text, from: 'admin'});
         } else if (text){
+            // to blast chat to connected socket
             io.emit(chatId, {name, text, from: 'admin'});
         }
 
